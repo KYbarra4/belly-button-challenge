@@ -34,11 +34,9 @@ function buildDemo(samples) {
 
         demoInfo.html("");
 
-        Object.entries(information).forEach(([key, value]) => {
-            demoInfo.append('p').text('${key}: ${value}');
+        Object.entries(information).forEach(([keys, value]) => {
+            demoInfo.append('p').text('${keys}: ${value}');
 
-        // var wfreq = parseFloat(information.wfreq)
-        // console.log(wfreq)
         });
     });
 }
@@ -48,14 +46,14 @@ function buildChart(samples) {
         let sampleData = data.samples;
         let selectID = sampleData.filter((demoObject) => demoObject.id == samples)[0];
 
-        let demoData = data.metadata;
-        let selectMeta = demoData.filter(demoObject => demoObject.id == samples);
+        // let demoData = data.metadata;
+        // let selectMeta = demoData.filter(demoObject => demoObject.id == samples)[0];
 
         // let idFirst = selectID[0]
-        let metaFirst = selectMeta[0]
+        // let metaFirst = selectMeta[0]
 
-        console.log(demoData)
-        console.log(metaFirst)
+        console.log(selectID)
+        // console.log(selectMeta)
 
 // Use sample_values as the values for the bar chart.
         let sample_values = selectID.sample_values;
@@ -65,6 +63,10 @@ function buildChart(samples) {
 
 // Use otu_labels as the hovertext for the chart.
         let otu_labels = selectID.otu_labels;
+
+        // console.log(sample_values)
+        // console.log(otu_ids)
+        // console.log(otu_labels)
 
         let trace1 = [{
 
@@ -77,6 +79,8 @@ function buildChart(samples) {
             orientation:'h'
 
         }];
+
+        // var data = [trace1];
 
         Plotly.newPlot('bar', trace1);
 
