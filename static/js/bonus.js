@@ -1,7 +1,10 @@
-function buildGuage() {
-    d3.json('samples.json').then((data) => {
+function buildGuage(samples) {
+  d3.json('samples.json').then(function (data) {
 
-    var wfreq = parseFloat(data.wfreq)
+    let demoData = data.metadata;
+    let information = demoData.filter((demoObject) => demoObject.id == samples)[0];
+
+    let wfreq = (information.wfreq)
     console.log(wfreq)
 
     let guageFreq = [{
@@ -9,38 +12,42 @@ function buildGuage() {
       value: wfreq,
       title: { text: "Belly Button Washing Frequency" },
       type: "indicator",
-      mode: "gauge+number+delta",
-    //   delta: { reference: 380 },
-      gauge: [{
+      mode: "gauge+number",
+      gauge: {
         axis: { range: [null, 10]},
+        bar: {color: "black"},
+        bordercolor: "black",
+        borderwidth: 2,
         steps: [
-          { range: [0, 1], color: "lightgray" },
-          { range: [1, 2], color: "gray" },
-          { range: [3, 4], color: "gray" },
-          { range: [4, 5], color: "gray" },
-          { range: [5, 6], color: "gray" },
-          { range: [6, 7], color: "gray" },
-          { range: [7, 8], color: "gray" },
-          { range: [8, 9], color: "gray" },
-        ]
-        // threshold: {
-        //   line: { color: "red", width: 4 },
-        //   thickness: 0.75,
-        //   value: 490
-        }]
+          { range: [0, 1], color: "#80ff80" },
+          { range: [1, 2], color: "#00ff00" },
+          { range: [2, 3], color: "#00e600" },
+          { range: [3, 4], color: "#00cc00" },
+          { range: [4, 5], color: "#00b300" },
+          { range: [5, 6], color: "#009900" },
+          { range: [6, 7], color: "#008000" },
+          { range: [7, 8], color: "#006600" },
+          { range: [8, 9], color: "#004d00" },
+          { range: [9, 10], color: "#001a00" },
+        ],
+        threshold: {
+          line: { color: "red", width: 4 },
+          thickness: 1,
+          value: 9
+        }
+      }
     //   }
   }];
 
   var layout = {
-    width: 500,
-    height: 400,
+    width: 400,
+    height: 300,
     margin: { t: 25, r: 25, l: 25, b: 25 },
-    paper_bgcolor: "lavender",
-    font: { color: "darkblue", family: "Arial" }
+    paper_bgcolor: "white",
+    font: { color: "Black", family: "Arial" }
   };
   
-//   var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
   Plotly.newPlot('gauge', guageFreq, layout);
 
-    });
+  });
 }

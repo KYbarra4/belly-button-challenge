@@ -3,6 +3,7 @@
 function init() {
 
     d3.json('samples.json').then(function (data) {
+
         console.log(data)
 
         let dropdownMenu = d3.select('#selDataset');
@@ -13,21 +14,23 @@ function init() {
 
         let beginSample = names[0];
 
-        // console.log(beginSample);
         buildChart(beginSample);
         buildDemo(beginSample);
+        buildGuage(beginSample)
     });
 }
 
 function optionChanged(sampleX) {
     buildChart(sampleX);
     buildDemo(sampleX);
+    buildGuage(sampleX)
 }
 
 init();
 
 function buildDemo(samples) {
-    d3.json('samples.json').then((data) => {
+
+    d3.json('samples.json').then(function (data) {
         let demoData = data.metadata;
         let information = demoData.filter((demoObject) => demoObject.id == samples)[0];
         let demoInfo = d3.select('#sample-metadata');
@@ -42,9 +45,16 @@ function buildDemo(samples) {
 }
 
 function buildChart(samples) {
-    d3.json('samples.json').then((data) => {
-        let sampleData = data.samples;
-        let selectID = sampleData.filter((demoObject) => demoObject.id == samples)[0];
+
+    d3.json('samples.json').then(function (data) {
+        let top10 = data.samples;
+        // let stuff = sampleData.out_ids;
+        let selectID = top10.filter((demoObject) => demoObject.id == samples)[0];
+        // let selectID = stuff.sort(function compareFunction(firstNum, secondNum) {
+        // console.log( 'select id',selectID)
+   
+        //     return firstNum - secondNum;
+        // });
 
         // let demoData = data.metadata;
         // let selectMeta = demoData.filter(demoObject => demoObject.id == samples)[0];
@@ -57,21 +67,24 @@ function buildChart(samples) {
 
 // Use sample_values as the values for the bar chart.
         let sample_values = selectID.sample_values;
+        console.log(sample_values)
 
 // Use otu_ids as the labels for the bar chart.
         let otu_ids = selectID.otu_ids;
+        console.log(otu_ids);
 
 // Use otu_labels as the hovertext for the chart.
         let otu_labels = selectID.otu_labels;
+        console.log(otu_labels)
 
-        // console.log(sample_values)
-        // console.log(otu_ids)
-        // console.log(otu_labels)
+        let barKey = otu_ids.slice(0, 10).map(id => 'OTU ${id}').reverse();
+        console.log(barKey);
 
         let trace1 = [{
 
             x: sample_values.slice(0, 10).reverse(),
-            y: otu_ids.slice(0, 10).map((OTU) => 'OTU ${OTU}').reverse(),
+            // y: otu_ids.slice(0, 10).map((OTU) => 'OTU ${OTU}').reverse(),
+            y: barKey,
 
             // name: 'Top 10 OTUs',
             labels: otu_labels.slice(0,10).reverse(),
@@ -102,5 +115,6 @@ function buildChart(samples) {
 
     });
 }
+
 
 
