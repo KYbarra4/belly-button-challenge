@@ -10,7 +10,8 @@ function buildGuage(samples) {
     let guageFreq = [{
       domain: { x: [0, 1], y: [0, 1] },
       value: wfreq,
-      title: { text: "Belly Button Washing Frequency" },
+      title: { text: "Belly Button Washing Frequency"},
+    
       type: "indicator",
       mode: "gauge+number",
       gauge: {
@@ -42,9 +43,11 @@ function buildGuage(samples) {
   var layout = {
     width: 400,
     height: 300,
+    title: 'Scrubs per Week',
     margin: { t: 25, r: 25, l: 25, b: 25 },
     paper_bgcolor: "white",
     font: { color: "Black", family: "Arial" }
+    
   };
   
   Plotly.newPlot('gauge', guageFreq, layout);

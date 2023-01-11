@@ -2,9 +2,11 @@
 // let url = 'https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json'
 function init() {
 
-    d3.json('samples.json').then(function (data) {
+    let Promise = d3.json('samples.json');
 
-        console.log(data)
+    console.log('Data Promise:', Promise)
+
+    d3.json('samples.json').then(function (data) {
 
         let dropdownMenu = d3.select('#selDataset');
         let names = data.names;
@@ -20,6 +22,7 @@ function init() {
     });
 }
 
+// Creating a function to change charts upon #selDataset dropdown change
 function optionChanged(sampleX) {
     buildChart(sampleX);
     buildDemo(sampleX);
@@ -30,15 +33,16 @@ init();
 
 function buildDemo(samples) {
 
-    d3.json('samples.json').then(function (data) {
+    d3.json('samples.json').then((data) => {
+
+        let demoBox = d3.select('#sample-metadata');
         let demoData = data.metadata;
-        let information = demoData.filter((demoObject) => demoObject.id == samples)[0];
-        let demoInfo = d3.select('#sample-metadata');
+        let information = demoData.filter(demoObject => demoObject.id == samples)[0];
 
-        demoInfo.html("");
+        demoBox.html("");
 
-        Object.entries(information).forEach(([keys, value]) => {
-            demoInfo.append('p').text('${keys}: ${value}');
+        Object.entries(information).forEach(([key, type]) => {
+            demoBox.append('h4').text(`${key.toUpperCase()}: ${type}`);
 
         });
     });
@@ -47,60 +51,49 @@ function buildDemo(samples) {
 function buildChart(samples) {
 
     d3.json('samples.json').then(function (data) {
-        let top10 = data.samples;
-        // let stuff = sampleData.out_ids;
-        let selectID = top10.filter((demoObject) => demoObject.id == samples)[0];
-        // let selectID = stuff.sort(function compareFunction(firstNum, secondNum) {
-        // console.log( 'select id',selectID)
-   
-        //     return firstNum - secondNum;
-        // });
+        let samplesY = data.samples;
+        
+        let sampleYdata = samplesY.filter((demoObject) => demoObject.id == samples)[0]; 
 
-        // let demoData = data.metadata;
-        // let selectMeta = demoData.filter(demoObject => demoObject.id == samples)[0];
+        console.log(sampleYdata)
 
-        // let idFirst = selectID[0]
-        // let metaFirst = selectMeta[0]
-
-        console.log(selectID)
-        // console.log(selectMeta)
-
-// Use sample_values as the values for the bar chart.
-        let sample_values = selectID.sample_values;
+// Use sample_values as the values for the bar chart
+        let sample_values = sampleYdata.sample_values.slice(0, 10).reverse();
         console.log(sample_values)
 
-// Use otu_ids as the labels for the bar chart.
-        let otu_ids = selectID.otu_ids;
+// Use otu_ids as the labels for the bar chart, extra step below
+        let otu_ids = sampleYdata.otu_ids;
         console.log(otu_ids);
 
-// Use otu_labels as the hovertext for the chart.
-        let otu_labels = selectID.otu_labels;
-        console.log(otu_labels)
+// Use otu_labels as the hovertext for the chart
+        let otu_labels = sampleYdata.otu_labels.slice(0, 10).reverse();
+        console.log(otu_labels);
 
-        let barKey = otu_ids.slice(0, 10).map(id => 'OTU ${id}').reverse();
-        console.log(barKey);
+// Slicing the top 10 labels 
+        let yLabels = otu_ids.slice(0, 10).map(OTUid => `OTU: ${OTUid}`).reverse();
+        console.log(yLabels);
 
         let trace1 = [{
 
-            x: sample_values.slice(0, 10).reverse(),
-            // y: otu_ids.slice(0, 10).map((OTU) => 'OTU ${OTU}').reverse(),
-            y: barKey,
-
-            // name: 'Top 10 OTUs',
-            labels: otu_labels.slice(0,10).reverse(),
+            x: sample_values,
+            y: yLabels,
+            labels: otu_ids,
+            hovertext: otu_labels,
             type: 'bar',
             orientation:'h'
 
         }];
 
-        // var data = [trace1];
+// Creating a title for trace1
+        let barLayout = {
+            title: 'Top 10 OTU Sample Groups by ID'
+        }
 
-        Plotly.newPlot('bar', trace1);
+        Plotly.newPlot('bar', trace1, barLayout);
 
         let trace2 = [{
             x: otu_ids,
             y: sample_values,
-            // title: 'OTU Bubble Data',
             labels: otu_labels,
             mode: 'markers',
             marker: {
@@ -111,7 +104,11 @@ function buildChart(samples) {
             
         }];
 
-        Plotly.newPlot('bubble', trace2);
+        let bubbleLayout = {
+            title: 'Bacteria Cultures Per Sample',
+        }
+
+        Plotly.newPlot('bubble',trace2, bubbleLayout);
 
     });
 }
