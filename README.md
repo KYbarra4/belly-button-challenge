@@ -10,7 +10,8 @@
 - Use otu_ids as the labels for the bar chart
 - Use otu_labels as the hovertext for the chart
 
-![belly2](https://user-images.githubusercontent.com/113717031/211970986-84e60d8a-8940-443d-8017-2315ca24d9de.png)
+![belly2](https://user-images.githubusercontent.com/113717031/211981525-bacfaf85-7cd6-4a7c-9a17-8b3df8e0eb7e.png)
+
 
 3) Create a bubble chart that displays each sample
 
@@ -20,7 +21,7 @@
 - Use otu_ids for the marker colors
 - Use otu_labels for the text values
 
-![belly3](https://user-images.githubusercontent.com/113717031/211971249-68175564-8d50-40d1-b979-35d73f8c7025.png)
+![belly3](https://user-images.githubusercontent.com/113717031/211981555-46627ac8-e55e-4418-84e0-6f96deef0cda.png)
 
 4) Display the sample metadata, i.e., an individual's demographic information
 5) Display each key-value pair from the metadata JSON object somewhere on the page
@@ -34,4 +35,4 @@
 
 ![belly6](https://user-images.githubusercontent.com/113717031/211971859-c3bbaaca-256a-4afd-8287-49c7688b1a46.png)
 
-![belly7](https://user-images.githubusercontent.com/113717031/211971762-00e91d7c-efb1-45b4-9865-cafee4004ed0.png)
+![belly7](https://user-images.githubusercontent.com/113717031/211981759-eb9104c9-a194-4c41-84cb-1f36d32e696d.png)
