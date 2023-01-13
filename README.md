@@ -35,4 +35,14 @@
 
 ![belly6](https://user-images.githubusercontent.com/113717031/211971859-c3bbaaca-256a-4afd-8287-49c7688b1a46.png)
 
+7) The following task is advanced and therefore optional.
+
+- Adapt the Gauge Chart to plot the weekly washing frequency of the individual
+- You will need to modify the example gauge code to account for values ranging from 0 through 9
+- Update the chart whenever a new sample is selected
+
+![image](https://user-images.githubusercontent.com/113717031/212235383-cc45b049-377a-46a7-a08b-ac00ff332c47.png)
+
+
+### Final Result
 ![belly7](https://user-images.githubusercontent.com/113717031/211981759-eb9104c9-a194-4c41-84cb-1f36d32e696d.png)
